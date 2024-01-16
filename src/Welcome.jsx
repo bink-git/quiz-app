@@ -1,11 +1,14 @@
 import React from 'react';
+import logo from './assets/logo.png';
 
 const Welcome = ({ onStart }) => {
   return (
-    <div className="welcome">
-      <p>Welcome</p>
-      <button onClick={() => onStart()}>Start Game</button>
-    </div>
+    <>
+      <div className="welcome">
+        <p>Welcome to the Trivia Challenge</p>
+        <button onClick={() => onStart()}>Start Quiz</button>
+      </div>
+    </>
   );
 };
 

@@ -5,18 +5,34 @@ import Result from './Result';
 import Game from './Game';
 import Welcome from './Welcome';
 
+import logo from './assets/logo.png';
+
 function App() {
   const [data, setData] = useState([]);
   const [step, setStep] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [start, setStart] = useState(true);
+  const [reset, setReset] = useState(false);
 
-  const onClickAnswer = () => {
+  const onClickNext = () => {
     setStep(step + 1);
+  };
+
+  const onClickAnswer = (answer) => {
+    if (data[step].correct_answer === answer) {
+      setCorrectAnswers(correctAnswers + 1);
+    }
   };
 
   const onStart = () => {
     setStart(false);
+  };
+
+  const onReset = () => {
+    setReset(true);
+    setStep(0);
+    setCorrectAnswers(0);
+    setStart(true);
   };
 
   useEffect(() => {
@@ -36,26 +52,37 @@ function App() {
   }, []);
 
   const quest = data && data[step];
-  console.log(quest);
 
   return (
-    <div className="App">
-      {start && <Welcome onStart={onStart} />}
-      {!start && quest && (
-        <>
-          <div className="progress">
-            <div style={{ width: '30%' }} className="progress__inner"></div>
+    <>
+      <header>
+        <img src={logo} alt="logo" className="logo" />
+      </header>
+      <div className="App">
+        {start && reset && <Welcome onStart={onStart} />}
+        {!start && quest && (
+          <>
             <p style={{ marginBottom: '30px' }}>
-              {step + 1} / {data.length}
+              Question: {step + 1} / {data.length}
             </p>
-          </div>
-          <Game quest={quest} onClickAnswer={onClickAnswer} />
-        </>
-      )}
+            <p>correct_answers: {correctAnswers}</p>
 
-      {/* <Result /> */}
-      {/* {data && data.map((item, index) => <p>{item.question}</p>)} */}
-    </div>
+            <Game quest={quest} onClickAnswer={onClickAnswer} />
+            <button className="next" onClick={onClickNext}>
+              Next
+            </button>
+          </>
+        )}
+
+        {step === data.length && (
+          <Result
+            correctAnswers={correctAnswers}
+            reset={reset}
+            onReset={onReset}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
