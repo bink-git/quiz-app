@@ -12,7 +12,7 @@ function App() {
   const [step, setStep] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [start, setStart] = useState(true);
-  const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState(true);
 
   const onClickNext = () => {
     setStep(step + 1);
