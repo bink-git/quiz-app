@@ -7,6 +7,12 @@ function Game({ quest, onClickAnswer }) {
   const [locked, setLocked] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState(null);
 
+  useEffect(() => {
+    // Reset state when a new question is received
+    setLocked(false);
+    setCorrectAnswer(null);
+  }, [quest]);
+
   const checkAnswer = (e, answer) => {
     if (locked === false) {
       if (answer === correct_answer) {
@@ -15,6 +21,7 @@ function Game({ quest, onClickAnswer }) {
       } else {
         e.target.classList.add('incorrect');
         setLocked(true);
+        setCorrectAnswer(correct_answer);
       }
     }
   };
@@ -34,6 +41,7 @@ function Game({ quest, onClickAnswer }) {
             style={{
               cursor: locked && 'not-allowed',
             }}
+            className={`${locked && answer === correctAnswer ? 'correct' : ''}`}
           >
             {answer}
           </li>

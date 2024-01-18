@@ -65,11 +65,11 @@ function App() {
             <p style={{ marginBottom: '30px' }}>
               Question: {step + 1} / {data.length}
             </p>
-            <p>correct_answers: {correctAnswers}</p>
+            {/* <p>correct_answers: {correctAnswers}</p> */}
 
             <Game quest={quest} onClickAnswer={onClickAnswer} />
             <button className="next" onClick={onClickNext}>
-              Next
+              {step === data.length - 1 ? 'Finish Quiz' : 'Next'}
             </button>
           </>
         )}
